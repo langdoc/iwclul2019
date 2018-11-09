@@ -1,7 +1,7 @@
 ---
-title: "Untitled"
-author: "Niko Partanen"
-date: "11/2/2018"
+title: "Some title"
+author: "authors"
+date: "11/9/2018"
 output: html_document
 editor_options: 
   chunk_output_type: console
