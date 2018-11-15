@@ -24,7 +24,13 @@ The OCR systems are known to be rather writing system and font specific, instead
 
 ## History of Unified Northern Alphabet
 
-MICHA FILL IN HERE!
+The Unified Northern Alphabet was developed for 16 Northern languages in the late 1920s, and taken into use in 1930. It is connected to the Latinization efforts of the time, where a large number of languages spoken in Soviet Union received new Latin based orthographies. In principle UNA is similar to these alphabets, with the difference that the unified base character system is extended for various languages with the use of diacritics and line throughs. On the other hand, for the smaller northern languages UNA was the first effort to create an alphabet, whereas for other languages the Latin scripts replaced the systems earlier in use.
+
+In this process a large number of textbooks and dictionaries were published (Grenoble 2003: 164). Since these books were printed in Saint Petersburg and clearly designed using common materials, they are very close to one another in their content and style. The reason that these materials were intended to be used in creating the literacy among these peoples explains that there are no translations of the same books in larger languages of the Soviet Union.
+
+The Latinization process in Soviet Union started in early 1920s, and was led by Islamic populations which had previously used Arabic script (Grenoble 2003: 49).
+
+
 
 ## Unified Northern Alphabet
 
