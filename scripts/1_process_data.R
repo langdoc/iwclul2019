@@ -191,8 +191,6 @@ gt <- bind_rows(
 # gt %>% count(set)
 # gt %>% filter(set == "multi") %>% count(lang)
 
-system("rm train/mixed/*")
-
 gt_train_mixed <- gt %>% 
   filter(set == "mixed") %>%
   filter(id <= 200) %>%
@@ -205,8 +203,6 @@ gt_train_mixed %>%
   walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
           file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
 
-system("rm train/sjd/*")
-
 gt_train_sjd <- bind_rows(gt_train_mixed %>%
   filter(lang == "sjd"),
   gt %>% filter(set == "sjd" & id <= 600)) %>%
@@ -218,8 +214,6 @@ gt_train_sjd %>%
   split(.$id_global) %>% 
   walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/sjd/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
     file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/sjd/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
-
-system("rm test/*/*")
 
 gt_test <- gt %>% 
   filter(set == "mixed") %>%
