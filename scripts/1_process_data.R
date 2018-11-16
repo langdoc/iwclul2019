@@ -1,4 +1,4 @@
-library(tidyverse)
+suppressPackageStartupMessages(library(tidyverse))
 library(tidytext)
 
 meta_part_1 <- tribble(~page, ~lang, ~orig_page,
@@ -8,12 +8,12 @@ meta_part_1 <- tribble(~page, ~lang, ~orig_page,
                        4, "sel", 7,
                        5, "sel", 8,
                        6, "sel", 9,
-                       7, "yrk", 7,
-                       8, "yrk", 8,
-                       9, "yrk", 9,
-                       10, "sjd", 7,
-                       11, "sjd", 8,
-                       12, "sjd", 9) %>%
+                       7, "sjd", 7,
+                       8, "sjd", 8,
+                       9, "sjd", 9,
+                       10, "yrk", 7,
+                       11, "yrk", 8,
+                       12, "yrk", 9) %>%
   mutate(page = str_pad(page, width = "4", pad = "0"))
 
 meta_part_2 <- tribble(~page, ~lang, ~orig_page,
@@ -96,31 +96,31 @@ meta_part_6 <- tribble(~page, ~lang, ~orig_page,
                        18, "yrk", 59) %>%
   mutate(page = str_pad(page, width = "4", pad = "0"))
 
-meta_part_7 <- tribble(~page, ~lang, ~orig_page,
-                       1, "evn", 54,
-                       2, "evn", 55,
-                       3, "evn", 56,
-                       4, "evn", 57,
-                       5, "evn", 58,
-                       6, "evn", 59,
-                       7, "evn", 56,
-                       8, "evn", 57,
-                       9, "evn", 58,
-                       10, "evn", 59,
-                       11, "evn", 56,
-                       12, "evn", 57,
-                       13, "evn", 58,
-                       14, "evn", 59,
-                       15, "evn", 56,
-                       16, "evn", 57,
-                       17, "evn", 58,
-                       18, "evn", 59,
-                       19, "evn", 60,
-                       20, "evn", 61,
-                       21, "evn", 62,
-                       22, "evn", 63,
-                       23, "evn", 64) %>%
-  mutate(page = str_pad(page, width = "4", pad = "0"))
+# meta_part_7 <- tribble(~page, ~lang, ~orig_page,
+#                        1, "evn", 54,
+#                        2, "evn", 55,
+#                        3, "evn", 56,
+#                        4, "evn", 57,
+#                        5, "evn", 58,
+#                        6, "evn", 59,
+#                        7, "evn", 56,
+#                        8, "evn", 57,
+#                        9, "evn", 58,
+#                        10, "evn", 59,
+#                        11, "evn", 56,
+#                        12, "evn", 57,
+#                        13, "evn", 58,
+#                        14, "evn", 59,
+#                        15, "evn", 56,
+#                        16, "evn", 57,
+#                        17, "evn", 58,
+#                        18, "evn", 59,
+#                        19, "evn", 60,
+#                        20, "evn", 61,
+#                        21, "evn", 62,
+#                        22, "evn", 63,
+#                        23, "evn", 64) %>%
+#   mutate(page = str_pad(page, width = "4", pad = "0"))
 
 
 gt <- bind_rows(
@@ -130,16 +130,16 @@ gt <- bind_rows(
       full.names = TRUE) %>%
     map_df(~ tibble(file = .x, line = read_file(.x))) %>%
     mutate(page = str_extract(file, "\\d{4}")) %>%
-    mutate(set = "multi") %>%
-    left_join(meta_part_1),
+    mutate(set = "mixed") %>%
+    left_join(meta_part_1, by = "page"),
   dir("../unified-northern-alphabet-ocr/train_part_2/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
     map_df(~ tibble(file = .x, line = read_file(.x))) %>%
     mutate(page = str_extract(file, "\\d{4}")) %>%
-    mutate(set = "multi") %>%
-    left_join(meta_part_2),
+    mutate(set = "mixed") %>%
+    left_join(meta_part_2, by = "page"),
   dir("../unified-northern-alphabet-ocr/train_part_3/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
@@ -147,31 +147,31 @@ gt <- bind_rows(
     map_df(~ tibble(file = .x, line = read_file(.x))) %>%
     mutate(page = str_extract(file, "\\d{4}")) %>%
     mutate(set = "sjd") %>%
-    left_join(meta_part_3),
+    left_join(meta_part_3, by = "page"),
   dir("../unified-northern-alphabet-ocr/train_part_4/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
     map_df(~ tibble(file = .x, line = read_file(.x))) %>%
     mutate(page = str_extract(file, "\\d{4}")) %>%
-    mutate(set = "multi") %>%
-    left_join(meta_part_4),
+    mutate(set = "mixed") %>%
+    left_join(meta_part_4, by = "page"),
   dir("../unified-northern-alphabet-ocr/train_part_5/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
     map_df(~ tibble(file = .x, line = read_file(.x))) %>%
     mutate(page = str_extract(file, "\\d{4}")) %>%
-    mutate(set = "multi") %>%
-    left_join(meta_part_5),
+    mutate(set = "mixed") %>%
+    left_join(meta_part_5, by = "page"),
   dir("../unified-northern-alphabet-ocr/train_part_6/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
     map_df(~ tibble(file = .x, line = read_file(.x))) %>%
     mutate(page = str_extract(file, "\\d{4}")) %>%
-    mutate(set = "multi") %>%
-    left_join(meta_part_6)#,
+    mutate(set = "mixed") %>%
+    left_join(meta_part_6, by = "page")#,
   # dir("../unified-northern-alphabet-ocr/train_part_7/", 
   #     pattern = "gt.txt", 
   #     recursive = TRUE, 
@@ -179,7 +179,7 @@ gt <- bind_rows(
   #   map_df(~ tibble(file = .x, line = read_file(.x))) %>%
   #   mutate(page = str_extract(file, "\\d{4}")) %>%
   #   mutate(set = "evn") %>%
-  #   left_join(meta_part_7)
+  #   left_join(meta_part_7, by = "page")
 ) %>% 
   arrange(lang, orig_page) %>%
   group_by(set, lang) %>%
@@ -193,27 +193,44 @@ gt <- bind_rows(
 
 system("rm train/mixed/*")
 
-gt %>% 
-  filter(set == "multi") %>%
+gt_train_mixed <- gt %>% 
+  filter(set == "mixed") %>%
   filter(id <= 200) %>%
   mutate(target_file = str_extract(file, "[^/]+$")) %>%
   mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
-  mutate(image_target = str_extract(image_source, "[^/]+$")) %>%
+  mutate(image_target = str_extract(image_source, "[^/]+$"))
+
+gt_train_mixed %>%
   split(.$id_global) %>% 
   walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
           file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
 
+system("rm train/sjd/*")
+
+gt_train_sjd <- bind_rows(gt_train_mixed %>%
+  filter(lang == "sjd"),
+  gt %>% filter(set == "sjd" & id <= 600)) %>%
+  mutate(target_file = str_extract(file, "[^/]+$")) %>%
+  mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
+  mutate(image_target = str_extract(image_source, "[^/]+$"))
+  
+gt_train_sjd %>%
+  split(.$id_global) %>% 
+  walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/sjd/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
+    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/sjd/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
+
 system("rm test/*/*")
 
-gt %>% 
-  filter(set == "multi") %>%
+gt_test <- gt %>% 
+  filter(set == "mixed") %>%
   filter(id > 200) %>%
   filter(id <= 250) %>%
   mutate(target_file = str_extract(file, "[^/]+$")) %>%
   mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
-  mutate(image_target = str_extract(image_source, "[^/]+$")) %>%
+  mutate(image_target = str_extract(image_source, "[^/]+$"))
+
+gt_test %>%
   split(.$id_global) %>% 
-  #  .[1:5] %>%
   walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("test/{.x$lang}/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
     file.copy(from = str_glue("{.x$image_source}"), to = str_glue("test/{.x$lang}/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
 
@@ -238,13 +255,6 @@ gt %>%
 
 # ocropus-rtrain -c ./train/hybrid/*gt.txt -o models/hybrid/una-03-279620 -d 20 ./train/hybrid/*png
 
-# gt %>%
-#   filter(set == "sjd") %>%
-#   filter(id > 800) %>%
-#   mutate(target_file = str_extract(file, "[^/]+$")) %>%
-#   mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
-#   mutate(image_target = str_extract(image_source, "[^/]+$")) %>%
-#   View
 
 # gt %>% 
 #   filter(set == "multi") %>%
