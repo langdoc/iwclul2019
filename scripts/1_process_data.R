@@ -1,5 +1,6 @@
 suppressPackageStartupMessages(library(tidyverse))
 library(tidytext)
+library(xtable)
 
 meta_part_1 <- tribble(~page, ~lang, ~orig_page,
                        1, "mns", 7,
@@ -96,6 +97,13 @@ meta_part_6 <- tribble(~page, ~lang, ~orig_page,
                        18, "yrk", 59) %>%
   mutate(page = str_pad(page, width = "4", pad = "0"))
 
+meta_part_8 <- tribble(~page, ~lang, ~orig_page,
+                       1, "mns", 60,
+                       2, "sel", 60,
+                       3, "sjd", 60,
+                       4, "yrk", 60) %>%
+  mutate(page = str_pad(page, width = "4", pad = "0"))
+
 # meta_part_7 <- tribble(~page, ~lang, ~orig_page,
 #                        1, "evn", 54,
 #                        2, "evn", 55,
@@ -171,25 +179,40 @@ gt <- bind_rows(
     map_df(~ tibble(file = .x, line = read_file(.x))) %>%
     mutate(page = str_extract(file, "\\d{4}")) %>%
     mutate(set = "mixed") %>%
-    left_join(meta_part_6, by = "page")#,
-  # dir("../unified-northern-alphabet-ocr/train_part_7/", 
-  #     pattern = "gt.txt", 
-  #     recursive = TRUE, 
-  #     full.names = TRUE) %>%
-  #   map_df(~ tibble(file = .x, line = read_file(.x))) %>%
-  #   mutate(page = str_extract(file, "\\d{4}")) %>%
-  #   mutate(set = "evn") %>%
-  #   left_join(meta_part_7, by = "page")
+    left_join(meta_part_6, by = "page"),
+  dir("../unified-northern-alphabet-ocr/train_part_8/",
+      pattern = "gt.txt",
+      recursive = TRUE,
+      full.names = TRUE) %>%
+    map_df(~ tibble(file = .x, line = read_file(.x))) %>%
+    mutate(page = str_extract(file, "\\d{4}")) %>%
+    mutate(set = "mixed") %>%
+    left_join(meta_part_8, by = "page")
 ) %>% 
   arrange(lang, orig_page) %>%
-  group_by(set, lang) %>%
-  mutate(id = 1:n()) %>%
-  ungroup() %>%
   mutate(id_global = 1:n())
 
 # gt %>% count(set, lang)
 # gt %>% count(set)
-# gt %>% filter(set == "multi") %>% count(lang)
+# gt %>% filter(set == "mixed") %>% filter(lang == "sjd") %>% View
+# gt %>% filter(lang == "sjd") %>% View
+
+title_ids <- read_csv("../unified-northern-alphabet-ocr/meta.csv", 
+                      col_names = c("file", "type"), col_types = "cc") %>%
+  filter(type == "title")
+
+# gt %>% mutate(big_text = toupper(line)) %>% filter(big_text == line) %>% View
+
+gt <- gt %>% mutate(text_id = str_remove(file, "../unified-northern-alphabet-ocr/")) %>%
+  mutate(text_id = str_remove(text_id, ".gt.txt")) %>%
+  mutate(text_id = str_replace(text_id, "//", "/")) %>%
+#  select(text_id) %>%
+  filter(! text_id %in% title_ids$file) %>%
+  select(-text_id)
+
+gt <- gt %>% group_by(set, lang) %>%
+  mutate(id = 1:n()) %>%
+  ungroup()
 
 gt_train_mixed <- gt %>% 
   filter(set == "mixed") %>%
@@ -197,6 +220,8 @@ gt_train_mixed <- gt %>%
   mutate(target_file = str_extract(file, "[^/]+$")) %>%
   mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
   mutate(image_target = str_extract(image_source, "[^/]+$"))
+
+gt_train_mixed %>% count(lang) %>% xtable(caption = "Train set sizes per language", type = "latex")
 
 gt_train_mixed %>%
   split(.$id_global) %>% 
@@ -209,6 +234,8 @@ gt_train_sjd <- bind_rows(gt_train_mixed %>%
   mutate(target_file = str_extract(file, "[^/]+$")) %>%
   mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
   mutate(image_target = str_extract(image_source, "[^/]+$"))
+
+gt_train_sjd %>% count(lang) %>% xtable(caption = "Train set sizes for sjd test", type = "latex")
   
 gt_train_sjd %>%
   split(.$id_global) %>% 
@@ -218,15 +245,44 @@ gt_train_sjd %>%
 gt_test <- gt %>% 
   filter(set == "mixed") %>%
   filter(id > 200) %>%
-  filter(id <= 250) %>%
+  filter(id <= 260) %>%
   mutate(target_file = str_extract(file, "[^/]+$")) %>%
   mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
   mutate(image_target = str_extract(image_source, "[^/]+$"))
+
+gt_test %>% count(lang) %>% xtable(caption = "Train set sizes for sjd test", type = "latex")
 
 gt_test %>%
   split(.$id_global) %>% 
   walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("test/{.x$lang}/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
     file.copy(from = str_glue("{.x$image_source}"), to = str_glue("test/{.x$lang}/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
+
+gt %>% 
+  group_by(orig_page, lang) %>% 
+  summarise(lines_per_page = n()) %>% 
+  ungroup %>% 
+  summarise(average = mean(lines_per_page),
+            maximum = max(lines_per_page),
+            minimum = min(lines_per_page))
+
+gt_sjd_incr <- dir("train/sjd/", pattern = "png", full.names = TRUE) %>%
+  tibble(filename = .) %>%
+  mutate(page_group = rep(c(1:40), 20)) %>%
+  mutate(page_group_padded = str_pad(page_group, pad = "0", width = 2)) %>%
+  arrange(page_group)
+
+slicing_window <- function(window){
+      
+  training_set <- gt_sjd_incr %>% 
+        filter(page_group <= window) %>% 
+        select(filename)
+      
+  filename = str_glue("training_lists/sjd-train-{str_pad(window, pad = '0', width = 2)}.txt")
+  write_delim(x = training_set, path = filename, col_names = FALSE)
+
+}
+
+1:40 %>% walk(slicing_window)
 
 # test_files <- gt %>% 
 #   filter(set == "multi") %>%
