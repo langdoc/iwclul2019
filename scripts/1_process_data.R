@@ -32,20 +32,20 @@ meta_part_2 <- tribble(~page, ~lang, ~orig_page,
                        12, "sel", 14,
                        13, "sel", 15,
                        14, "sel", 16,
-                       15, "yrk", 10,
-                       16, "yrk", 11,
-                       17, "yrk", 12,
-                       18, "yrk", 13,
-                       19, "yrk", 14,
-                       20, "yrk", 15,
-                       21, "yrk", 16,
-                       22, "sjd", 10,
-                       23, "sjd", 11,
-                       24, "sjd", 12,
-                       25, "sjd", 13,
-                       26, "sjd", 14,
-                       27, "sjd", 15,
-                       28, "sjd", 16) %>%
+                       15, "sjd", 10,
+                       16, "sjd", 11,
+                       17, "sjd", 12,
+                       18, "sjd", 13,
+                       19, "sjd", 14,
+                       20, "sjd", 15,
+                       21, "sjd", 16,
+                       22, "yrk", 10,
+                       23, "yrk", 11,
+                       24, "yrk", 12,
+                       25, "yrk", 13,
+                       26, "yrk", 14,
+                       27, "yrk", 15,
+                       28, "yrk", 16) %>%
   mutate(page = str_pad(page, width = "4", pad = "0"))
 
 meta_part_3 <- tibble(page = 1:34 %>%
@@ -265,24 +265,24 @@ gt %>%
             maximum = max(lines_per_page),
             minimum = min(lines_per_page))
 
-gt_sjd_incr <- dir("train/sjd/", pattern = "png", full.names = TRUE) %>%
-  tibble(filename = .) %>%
-  mutate(page_group = rep(c(1:40), 20)) %>%
-  mutate(page_group_padded = str_pad(page_group, pad = "0", width = 2)) %>%
-  arrange(page_group)
-
-slicing_window <- function(window){
-      
-  training_set <- gt_sjd_incr %>% 
-        filter(page_group <= window) %>% 
-        select(filename)
-      
-  filename = str_glue("training_lists/sjd-train-{str_pad(window, pad = '0', width = 2)}.txt")
-  write_delim(x = training_set, path = filename, col_names = FALSE)
-
-}
-
-1:40 %>% walk(slicing_window)
+# gt_sjd_incr <- dir("train/sjd/", pattern = "png", full.names = TRUE) %>%
+#   tibble(filename = .) %>%
+#   mutate(page_group = rep(c(1:40), 20)) %>%
+#   mutate(page_group_padded = str_pad(page_group, pad = "0", width = 2)) %>%
+#   arrange(page_group)
+# 
+# slicing_window <- function(window){
+#       
+#   training_set <- gt_sjd_incr %>% 
+#         filter(page_group <= window) %>% 
+#         select(filename)
+#       
+#   filename = str_glue("training_lists/sjd-train-{str_pad(window, pad = '0', width = 2)}.txt")
+#   write_delim(x = training_set, path = filename, col_names = FALSE)
+# 
+# }
+# 
+# 1:40 %>% walk(slicing_window)
 
 # test_files <- gt %>% 
 #   filter(set == "multi") %>%
