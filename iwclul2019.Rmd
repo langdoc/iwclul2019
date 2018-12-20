@@ -61,6 +61,8 @@ It is inevitable that the model will not be able to recognize the characters it 
 
 ģ should be used only in Itelmen, but it occurs also in Kildin. What are typos and what aren't?
 
+The books used contain some headlines that are in very unusual font, which would be only sporadically covered in train and test datasets. For this reason these lines are not used. Ground Truth package's metadata is used to distinguish these lines.
+
 ## Training
 
 ```{r}
@@ -102,7 +104,7 @@ Both models have converged into a very high accuracy by 10,000 epochs. For produ
 
 ## Results
 
-Since the Kildin Saami model has never seen the characters not used in Kildin Saami, it can be assumed that it performs poorly with data from other languages. This is indeed the case, as plot below summarises. With the mixed test set Kildin Saami model has an arror rate of 9%.
+Since the Kildin Saami model has never seen the characters not used in Kildin Saami, it can be assumed that it performs poorly with data from other languages. This is indeed the case, as plot below summarises. With the mixed test set Kildin Saami model has an error rate of 9%.
 
 In a monolingual Kildin Saami scenario Kildin Saami model outperforms the mixed model, but the difference is only `r 0.02034-0.01469` percents. When compared in context, the similarity of performance in both models when used with Kildin Saami data is even more striking. In both tests Mansi accuracy is the best, which can be argued is caused by small amount of characters only present in Mansi. 
 
