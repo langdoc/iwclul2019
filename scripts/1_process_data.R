@@ -201,7 +201,8 @@ gt <- bind_rows(
   arrange(lang, orig_page) %>%
   mutate(id_global = 1:n()) %>%
   mutate(new_filename = str_extract(file, "train_part_.+")) %>%
-  mutate(new_filename = str_replace_all(new_filename, "[/]+", "-"))
+  mutate(new_filename = str_replace_all(new_filename, "[/]+", "-")) %>%
+  mutate(new_filename_png = str_replace_all(new_filename, ".gt.txt", ".bin.png"))
 
 # gt %>% mutate(file = str_remove(file, "./data/unified-northern-alphabet-ocr/")) %>%
 #   select(-line, -set, -id_global) %>%
@@ -244,7 +245,7 @@ gt_train_mixed %>% count(lang) %>% xtable(caption = "Train set sizes per languag
 gt_train_mixed %>%
   split(.$id_global) %>% 
   walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/mixed/{.x$new_filename}"), overwrite = TRUE)
-          file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/mixed/{.x$new_filename}"), overwrite = TRUE)})
+          file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/mixed/{.x$new_filename_png}"), overwrite = TRUE)})
   # walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
   #         file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
 
@@ -260,7 +261,7 @@ gt_train_sjd %>% count(lang) %>% xtable(caption = "Train set sizes for sjd test"
 gt_train_sjd %>%
   split(.$id_global) %>% 
   walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/sjd/{.x$new_filename}"), overwrite = TRUE)
-    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/sjd/{.x$new_filename}"), overwrite = TRUE)})
+    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/sjd/{.x$new_filename_png}"), overwrite = TRUE)})
 
 gt_test <- gt %>% 
   filter(set == "mixed") %>%
@@ -275,7 +276,7 @@ gt_test %>% count(lang) %>% xtable(caption = "Test set sizes", type = "latex")
 gt_test %>%
   split(.$id_global) %>% 
   walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("test/{.x$lang}/{.x$new_filename}"), overwrite = TRUE)
-    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("test/{.x$lang}/{.x$new_filename}"), overwrite = TRUE)})
+    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("test/{.x$lang}/{.x$new_filename_png}"), overwrite = TRUE)})
 
 gt %>% 
   group_by(orig_page, lang) %>% 
