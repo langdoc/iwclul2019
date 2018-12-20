@@ -274,8 +274,8 @@ gt_test %>% count(lang) %>% xtable(caption = "Test set sizes", type = "latex")
 
 gt_test %>%
   split(.$id_global) %>% 
-  walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("test/{.x$new_filename}"), overwrite = TRUE)
-    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("test/{.x$new_filename}"), overwrite = TRUE)})
+  walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("test/{.x$lang}/{.x$new_filename}"), overwrite = TRUE)
+    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("test/{.x$lang}/{.x$new_filename}"), overwrite = TRUE)})
 
 gt %>% 
   group_by(orig_page, lang) %>% 
