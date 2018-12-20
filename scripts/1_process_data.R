@@ -132,7 +132,7 @@ meta_part_8 <- tribble(~page, ~lang, ~orig_page,
 
 
 gt <- bind_rows(
-  dir("../unified-northern-alphabet-ocr/train_part_1/", 
+  dir("./data/unified-northern-alphabet-ocr/train_part_1/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
@@ -140,7 +140,7 @@ gt <- bind_rows(
     mutate(page = str_extract(file, "\\d{4}")) %>%
     mutate(set = "mixed") %>%
     left_join(meta_part_1, by = "page"),
-  dir("../unified-northern-alphabet-ocr/train_part_2/", 
+  dir("./data/unified-northern-alphabet-ocr/train_part_2/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
@@ -148,7 +148,7 @@ gt <- bind_rows(
     mutate(page = str_extract(file, "\\d{4}")) %>%
     mutate(set = "mixed") %>%
     left_join(meta_part_2, by = "page"),
-  dir("../unified-northern-alphabet-ocr/train_part_3/", 
+  dir("./data/unified-northern-alphabet-ocr/train_part_3/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
@@ -156,7 +156,7 @@ gt <- bind_rows(
     mutate(page = str_extract(file, "\\d{4}")) %>%
     mutate(set = "sjd") %>%
     left_join(meta_part_3, by = "page"),
-  dir("../unified-northern-alphabet-ocr/train_part_4/", 
+  dir("./data/unified-northern-alphabet-ocr/train_part_4/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
@@ -164,7 +164,7 @@ gt <- bind_rows(
     mutate(page = str_extract(file, "\\d{4}")) %>%
     mutate(set = "mixed") %>%
     left_join(meta_part_4, by = "page"),
-  dir("../unified-northern-alphabet-ocr/train_part_5/", 
+  dir("./data/unified-northern-alphabet-ocr/train_part_5/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
@@ -172,7 +172,7 @@ gt <- bind_rows(
     mutate(page = str_extract(file, "\\d{4}")) %>%
     mutate(set = "mixed") %>%
     left_join(meta_part_5, by = "page"),
-  dir("../unified-northern-alphabet-ocr/train_part_6/", 
+  dir("./data/unified-northern-alphabet-ocr/train_part_6/", 
       pattern = "gt.txt", 
       recursive = TRUE, 
       full.names = TRUE) %>%
@@ -180,7 +180,7 @@ gt <- bind_rows(
     mutate(page = str_extract(file, "\\d{4}")) %>%
     mutate(set = "mixed") %>%
     left_join(meta_part_6, by = "page"),
-  dir("../unified-northern-alphabet-ocr/train_part_8/",
+  dir("./data/unified-northern-alphabet-ocr/train_part_8/",
       pattern = "gt.txt",
       recursive = TRUE,
       full.names = TRUE) %>%
@@ -192,18 +192,25 @@ gt <- bind_rows(
   arrange(lang, orig_page) %>%
   mutate(id_global = 1:n())
 
+# gt %>% mutate(file = str_remove(file, "./data/unified-northern-alphabet-ocr/")) %>%
+#   select(-line, -set, -id_global) %>%
+#   rename(language = lang) %>%
+#   write_csv("../unified-northern-alphabet-ocr/meta_pages.csv")
+
 # gt %>% count(set, lang)
 # gt %>% count(set)
 # gt %>% filter(set == "mixed") %>% filter(lang == "sjd") %>% View
 # gt %>% filter(lang == "sjd") %>% View
 
-title_ids <- read_csv("../unified-northern-alphabet-ocr/meta.csv", 
+# read_csv("data/unified-northern-alphabet-ocr/meta_pages.csv")
+
+title_ids <- read_csv("./data/unified-northern-alphabet-ocr/meta_extra.csv", 
                       col_names = c("file", "type"), col_types = "cc") %>%
   filter(type == "title")
 
 # gt %>% mutate(big_text = toupper(line)) %>% filter(big_text == line) %>% View
 
-gt <- gt %>% mutate(text_id = str_remove(file, "../unified-northern-alphabet-ocr/")) %>%
+gt <- gt %>% mutate(text_id = str_remove(file, "./data/unified-northern-alphabet-ocr/")) %>%
   mutate(text_id = str_remove(text_id, ".gt.txt")) %>%
   mutate(text_id = str_replace(text_id, "//", "/")) %>%
 #  select(text_id) %>%
@@ -320,3 +327,16 @@ gt %>%
 #   count(set, lang) 
 # 
 # gt %>% count(set, lang)
+
+gt %>%
+  # group_by(lang) %>%
+  mutate(character = str_split(line, '')) %>%
+  unnest(character) %>%
+  mutate(type = case_when(str_detect(character, "\\p{Uppercase_Letter}") ~ "upper",
+                          str_detect(character, "\\p{Lowercase_Letter}") ~ "lower",
+                          TRUE ~ "other")) %>%
+  filter(! type == "other") %>%
+  mutate(character = tolower(character)) %>%
+  # filter(character == "е") %>% pull(file)
+  count(character, sort = TRUE)
+  

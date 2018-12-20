@@ -15,10 +15,10 @@ best_score <- errors %>% filter(error_rate == min(error_rate))
 ggplot(data = errors, aes(x = model, y = error_rate, group = 1)) +
   geom_line() +
   geom_point() +
-  geom_point(data = best_score, colour="red") +  # this adds a red point
+  geom_point(data = best_score, colour="red", size = 2) +  # this adds a red point
   geom_text(data = best_score, label = "", hjust=-.1) +
   # scale_y_continuous(labels = scales::percent) +
   labs(x = "Number of training pages",
-       y = "Error rate (%)",
-       title = "Test scores for Kildin Saami OCR model",
-       subtitle = str_glue("Best score with error rate of {best_score$error_rate} %  marked with red"))
+       y = "Error rate (%)")
+
+"Test scores for Kildin Saami OCR model. Best score with error rate of 1.95%  marked with red"
