@@ -10,6 +10,10 @@ dir.create("test/mns")
 dir.create("test/sel")
 dir.create("test/sjd")
 dir.create("test/yrk")
+dir.create("models")
+dir.create("models/incr")
+dir.create("models/mixed")
+dir.create("models/sjd")
 
 meta_part_1 <- tribble(~page, ~lang, ~orig_page,
                        1, "mns", 7,
@@ -354,3 +358,44 @@ gt %>%
   # filter(character == "е") %>% pull(file)
   count(character, sort = TRUE)
   
+## This prepares the data for incremental test
+
+dir.create("training_lists")
+
+gt_sjd_incr <- dir("train/sjd/", pattern = "png", full.names = TRUE) %>%
+  tibble(filename = .) %>%
+  mutate(page_group = rep(c(1:40), 20)) %>%
+  mutate(page_group_padded = str_pad(page_group, pad = "0", width = 2)) %>%
+  arrange(page_group)
+
+slicing_window <- function(window){
+  
+  training_set <- gt_sjd_incr %>%
+    filter(page_group <= window) %>%
+    select(filename)
+  
+  filename = str_glue("training_lists/sjd-train-{str_pad(window, pad = '0', width = 2)}.txt")
+  write_delim(x = training_set, path = filename, col_names = FALSE)
+  
+}
+
+1:40 %>% walk(slicing_window)
+
+# test_files <- gt %>%
+#   filter(set == "mixed") %>%
+#   filter(id > 200) %>%
+#   filter(id <= 250) %>%
+#   mutate(target_file = str_extract(file, "[^/]+$")) %>%
+#   mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
+#   # mutate(image_target = str_extract(image_source, "[^/]+$")) %>%
+#   pull(file)
+# 
+# gt %>%
+#   filter(! file %in% test_files) %>%
+#   #  filter(id <= 800) %>%
+#   mutate(target_file = str_extract(file, "[^/]+$")) %>%
+#   mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
+#   mutate(image_target = str_extract(image_source, "[^/]+$")) %>%
+#   split(.$id_global) %>%
+#   walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/hybrid/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
+#     file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/hybrid/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
