@@ -2,6 +2,15 @@ suppressPackageStartupMessages(library(tidyverse))
 library(tidytext)
 library(xtable)
 
+dir.create("train/")
+dir.create("train/mixed")
+dir.create("train/sjd")
+dir.create("test")
+dir.create("test/mns")
+dir.create("test/sel")
+dir.create("test/sjd")
+dir.create("test/yrk")
+
 meta_part_1 <- tribble(~page, ~lang, ~orig_page,
                        1, "mns", 7,
                        2, "mns", 8,
@@ -190,7 +199,9 @@ gt <- bind_rows(
     left_join(meta_part_8, by = "page")
 ) %>% 
   arrange(lang, orig_page) %>%
-  mutate(id_global = 1:n())
+  mutate(id_global = 1:n()) %>%
+  mutate(new_filename = str_extract(file, "train_part_.+")) %>%
+  mutate(new_filename = str_replace_all(new_filename, "[/]+", "-"))
 
 # gt %>% mutate(file = str_remove(file, "./data/unified-northern-alphabet-ocr/")) %>%
 #   select(-line, -set, -id_global) %>%
@@ -232,8 +243,10 @@ gt_train_mixed %>% count(lang) %>% xtable(caption = "Train set sizes per languag
 
 gt_train_mixed %>%
   split(.$id_global) %>% 
-  walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
-          file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
+  walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/mixed/{.x$new_filename}"), overwrite = TRUE)
+          file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/mixed/{.x$new_filename}"), overwrite = TRUE)})
+  # walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
+  #         file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/mixed/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
 
 gt_train_sjd <- bind_rows(gt_train_mixed %>%
   filter(lang == "sjd"),
@@ -246,23 +259,23 @@ gt_train_sjd %>% count(lang) %>% xtable(caption = "Train set sizes for sjd test"
   
 gt_train_sjd %>%
   split(.$id_global) %>% 
-  walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/sjd/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
-    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/sjd/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
+  walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("train/sjd/{.x$new_filename}"), overwrite = TRUE)
+    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("train/sjd/{.x$new_filename}"), overwrite = TRUE)})
 
 gt_test <- gt %>% 
   filter(set == "mixed") %>%
   filter(id > 200) %>%
-  filter(id <= 260) %>%
+  filter(id <= 300) %>%
   mutate(target_file = str_extract(file, "[^/]+$")) %>%
   mutate(image_source = str_replace(file, "gt.txt$", "bin.png")) %>%
   mutate(image_target = str_extract(image_source, "[^/]+$"))
 
-gt_test %>% count(lang) %>% xtable(caption = "Train set sizes for sjd test", type = "latex")
+gt_test %>% count(lang) %>% xtable(caption = "Test set sizes", type = "latex")
 
 gt_test %>%
   split(.$id_global) %>% 
-  walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("test/{.x$lang}/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$target_file}"), overwrite = TRUE)
-    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("test/{.x$lang}/{.x$id_global}-{.x$set}-{.x$lang}-{.x$page}-{.x$image_target}"), overwrite = TRUE)})
+  walk(~ {file.copy(from = str_glue("{.x$file}"), to = str_glue("test/{.x$new_filename}"), overwrite = TRUE)
+    file.copy(from = str_glue("{.x$image_source}"), to = str_glue("test/{.x$new_filename}"), overwrite = TRUE)})
 
 gt %>% 
   group_by(orig_page, lang) %>% 
