@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mkdir evaluation
+mkdir evaluation/incr
 
 for model in `ls models/incr/*10000.pyrnn.gz`
 do
