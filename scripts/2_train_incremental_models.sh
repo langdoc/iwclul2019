@@ -1,3 +1,5 @@
+#!/bin/bash
+
 for filelist in `ls training_lists/*.txt`
 do
  number=$(echo $filelist | sed 's/training_lists\/sjd-train-//g' | sed 's/.txt//g')
