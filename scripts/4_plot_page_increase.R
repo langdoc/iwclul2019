@@ -1,7 +1,7 @@
 library(tidyverse)
 library(ggplot2)
 
-errors <- read_lines("logs/incr_log/incr_log") %>%
+errors <- read_lines("evaluation/incr/incr_log") %>%
   .[str_detect(., "(loading object|err )")] %>%
   glue::glue_collapse() %>%
   str_split("# loading ") %>%
@@ -12,7 +12,7 @@ errors <- read_lines("logs/incr_log/incr_log") %>%
 
 best_score <- errors %>% filter(error_rate == min(error_rate))
 
-ggplot(data = errors, aes(x = model, y = error_rate, group = 1)) +
+score_incr_plot <- ggplot(data = errors, aes(x = model, y = error_rate, group = 1)) +
   geom_line() +
   geom_point() +
   geom_point(data = best_score, colour="red", size = 2) +  # this adds a red point
@@ -20,5 +20,9 @@ ggplot(data = errors, aes(x = model, y = error_rate, group = 1)) +
   # scale_y_continuous(labels = scales::percent) +
   labs(x = "Number of training pages",
        y = "Error rate (%)")
+
+dir.create("plots")
+
+ggsave(filename = "plots/figure_5.png", plot = score_incr_plot)
 
 "Test scores for Kildin Saami OCR model. Best score with error rate of 1.95%  marked with red"
