@@ -2,43 +2,43 @@ library(tidyverse)
 library(ggplot2)
 library(tidytext)
 
-scores <- dir("evaluation/", full.names = TRUE, recursive = TRUE) %>%
-  map_df(~ {
-    read_tsv(.x, 
-         col_names = c("errors", "characters", "line")) %>%
-  mutate(lang = str_extract(line, "(mns|sel|sjd|yrk)")) %>%
-  mutate(epoch = str_extract(.x, "\\d{8}") %>% as.numeric()) %>%
-  mutate(score = errors / characters) %>%
-  mutate(experiment = str_extract(.x, "(mixed|sjd)"))
-  }
-)
-
-scores %>% 
-  filter(experiment == "mixed") %>%
-  group_by(epoch, lang) %>%
-  summarise(error_mean = mean(score)) %>%
-  ggplot(data = ., aes(x = epoch, y = error_mean, color = lang)) +
-  geom_line()
-
-scores %>% 
-  filter(experiment == "mixed") %>%
-  group_by(epoch) %>%
-  summarise(error_mean = mean(score)) %>%
-  ggplot(data = ., aes(x = epoch, y = error_mean)) +
-  geom_line()
-
-scores %>% 
-  filter(experiment == "sjd") %>%
-  group_by(epoch) %>%
-  summarise(error_mean = mean(score)) %>%
-  arrange(error_mean)
-
-scores %>% 
-  filter(experiment == "sjd") %>%
-  group_by(epoch) %>%
-  summarise(error_mean = mean(score)) %>%
-  ggplot(data = ., aes(x = epoch, y = error_mean)) +
-  geom_line()
+# scores <- dir("evaluation/", full.names = TRUE, recursive = TRUE) %>%
+#   map_df(~ {
+#     read_tsv(.x, 
+#          col_names = c("errors", "characters", "line")) %>%
+#   mutate(lang = str_extract(line, "(mns|sel|sjd|yrk)")) %>%
+#   mutate(epoch = str_extract(.x, "\\d{8}") %>% as.numeric()) %>%
+#   mutate(score = errors / characters) %>%
+#   mutate(experiment = str_extract(.x, "(mixed|sjd)"))
+#   }
+# )
+# 
+# scores %>% 
+#   filter(experiment == "mixed") %>%
+#   group_by(epoch, lang) %>%
+#   summarise(error_mean = mean(score)) %>%
+#   ggplot(data = ., aes(x = epoch, y = error_mean, color = lang)) +
+#   geom_line()
+# 
+# scores %>% 
+#   filter(experiment == "mixed") %>%
+#   group_by(epoch) %>%
+#   summarise(error_mean = mean(score)) %>%
+#   ggplot(data = ., aes(x = epoch, y = error_mean)) +
+#   geom_line()
+# 
+# scores %>% 
+#   filter(experiment == "sjd") %>%
+#   group_by(epoch) %>%
+#   summarise(error_mean = mean(score)) %>%
+#   arrange(error_mean)
+# 
+# scores %>% 
+#   filter(experiment == "sjd") %>%
+#   group_by(epoch) %>%
+#   summarise(error_mean = mean(score)) %>%
+#   ggplot(data = ., aes(x = epoch, y = error_mean)) +
+#   geom_line()
 
 
 evaluate_model <- function(model = "models/mixed/mixed-00020000.pyrnn.gz", test_set = "test/*/*.bin.png"){
