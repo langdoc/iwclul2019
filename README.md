@@ -1,10 +1,15 @@
 # An OCR system for the Unified Northern Alphabet
 
-This is data repository for the article "An OCR system for the Unified Northern Alphabet" forthcoming in IWCLUL conference proceedings. The authors are Niko Partanen and Michael Rießler.
+This is data repository for the article **An OCR system for the Unified Northern Alphabet** forthcoming in [IWCLUL 2019](https://sisu.ut.ee/iwclul2019/avaleht) workshop proceedings. The authors are Niko Partanen and Michael Rießler.
 
-The paper concludes that with very few resources it is possible to build state-of-the-art performing OCR model for writing systems such as Unified Northern Alphabet. 
+The trained model files are available in models repository, the main models described in mixed and monolingual experiments are:
 
-All materials used are stored in the National Library of Finland's Fenno-Ugrica collection, except the Evenki data, which is available [in the University of Latvia's library](https://dspace.lu.lv/dspace/handle/7/28251). 
+    models/mixed/mixed-00050000.pyrnn.gz
+    models/sjd/sjd-00050000.pyrnn.gz
+
+The paper concludes that with very few resources it is possible to build state-of-the-art performing OCR model for writing systems such as Unified Northern Alphabet, and that in some circumstances building multilingual model is a good alternative to monolingual one. 
+
+All materials used originate from the National Library of Finland's Fenno-Ugrica collection, except the Evenki data, which is available [in the University of Latvia's library](https://dspace.lu.lv/dspace/handle/7/28251). 
 
 ## Reproducibility
 
