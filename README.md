@@ -1,19 +1,14 @@
-This is a paper that tests building OCR systems for Unified Northern Alphabet, using Ground Truth data package [Unified-Northern-Alphabet-OCR](https://github.com/langdoc/unified-northern-alphabet-ocr) built by Partanen and Rießler in 2018.
+# An OCR system for the Unified Northern Alphabet
 
-The tests reported in the study are as follows:
+This is data repository for the article "An OCR system for the Unified Northern Alphabet" forthcoming in IWCLUL conference proceedings. The authors are Niko Partanen and Michael Rießler.
 
-- mixed OCR model containing data from Kildin Saami, Northern Mansi, Selkup and Tundra Nenets
-- monolingual Kildin Saami model
-- additional tests on unseen Evenki data
-- additional retraining of the model to capture Evenki particularities
-
-The paper concludes that with very few resources it is possible to build state-of-the-art performing OCR model for writing systems such as Unified Northern Alphabet. The Evenki tests demonstrate a workflow that would allow analysing any of the languages written in this alphabet.
+The paper concludes that with very few resources it is possible to build state-of-the-art performing OCR model for writing systems such as Unified Northern Alphabet. 
 
 All materials used are stored in the National Library of Finland's Fenno-Ugrica collection, except the Evenki data, which is available [in the University of Latvia's library](https://dspace.lu.lv/dspace/handle/7/28251). 
 
 ## Reproducibility
 
-The results in the study can be repeated by following commands. Ocropy has to be installed in the local environment.
+The results in the study can be repeated by following commands. Ocropy has to be installed in the local environment. **In the current version there are hard-coded paths to Ocropy command line tools, and those have to be changed to run the tests locally.** This will be fixed in final release.
 
 ```
 # This will clone the training data
@@ -34,8 +29,18 @@ bash scripts/4_evaluate_page_increase.sh
 pbpaste > evaluation/incr/incr_log
 
 # This saves the figure about the increase
-# into file plots/figure_5.png
+# into file plots/figure_4.png
 Rscript scripts/4_plot_page_increase.R
 
+# This trains the models for the second test
+bash scripts/2_train_models.sh 
+
+# This saves the figure about those results
+# into file plots/figure_5.png
+Rscript scripts/5_model_plots.R
+
+# This does the Evenki test and prints
+# the results into console
+Rsript scripts/6_evenki_test.R
 
 ```
