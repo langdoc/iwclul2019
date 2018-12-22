@@ -1,0 +1,400 @@
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-01-00010000.pyrnn.gz
+errors         493
+missing          0
+total         3405
+err         14.479 %
+errnomiss   14.479 %
+20	_	i
+18	m	n
+16	.	,
+15	_	 
+13	.	_
+10	_	.
+8	n	_
+8	t	i
+8	a	z
+8	ə	a
+0.1447870778267254
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-02-00010000.pyrnn.gz
+errors         174
+missing          0
+total         3405
+err          5.110 %
+errnomiss    5.110 %
+12	_	d
+9	i	j
+7	s	ꞩ
+6	_	z
+6	ꞩ	ƶ
+6	.	,
+5	j	ļ
+5	l	_
+5	r	_
+5	p	ŗ
+0.05110132158590308
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-03-00010000.pyrnn.gz
+errors         156
+missing          0
+total         3405
+err          4.581 %
+errnomiss    4.581 %
+10	_	 
+8	t	i
+6	ļ	j
+6	l	J
+5	s	ꞩ
+4	ꞩ	s
+3	l	i
+3	e	є
+3	_	ţ
+3	_	̦
+0.04581497797356828
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-04-00010000.pyrnn.gz
+errors         274
+missing          0
+total         3405
+err          8.047 %
+errnomiss    8.047 %
+26	ļ	l
+12	t	i
+11	l	i
+8	_	 
+6	g	ş
+5	_	L
+5	t	f
+5	e	є
+5	E	L
+5	z	ƶ
+0.08046989720998532
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-05-00010000.pyrnn.gz
+errors          99
+missing          0
+total         3405
+err          2.907 %
+errnomiss    2.907 %
+18	_	 
+5	n	_
+4	l	i
+4	t	f
+3	_	-
+3	l	J
+2	.	,
+2	ꞩ	s
+2	l	I
+2	_	i
+0.02907488986784141
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-06-00010000.pyrnn.gz
+errors         122
+missing          0
+total         3405
+err          3.583 %
+errnomiss    3.583 %
+13	_	 
+6	_	в
+6	_	l
+3	e	є
+3	_	S
+3	_	-
+2	_	L
+2	f	i
+2	z	ƶ
+2	n	_
+0.035829662261380325
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-07-00010000.pyrnn.gz
+errors         160
+missing          0
+total         3405
+err          4.699 %
+errnomiss    4.699 %
+6	ь	в
+6	k	L
+5	ь	ƶ
+5	l	J
+4	_	L
+4	l	T
+4	_	i
+4	j	ţ
+3	K	P
+3	_	̦
+0.04698972099853157
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-08-00010000.pyrnn.gz
+errors          69
+missing          0
+total         3405
+err          2.026 %
+errnomiss    2.026 %
+4	e	є
+4	_	f
+4	_	 
+4	t	f
+3	.	,
+3	_	̦
+2	r	ŗ
+1	i	l
+1	j	(
+1	_	ŗ
+0.02026431718061674
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-09-00010000.pyrnn.gz
+errors         102
+missing          0
+total         3405
+err          2.996 %
+errnomiss    2.996 %
+8	t	f
+6	_	 
+5	_	L
+4	ţ	ŗ
+4	z	ƶ
+3	 	-
+3	P	L
+2	t	i
+2	j	ļ
+2	l	I
+0.029955947136563875
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-10-00010000.pyrnn.gz
+errors          75
+missing          0
+total         3405
+err          2.203 %
+errnomiss    2.203 %
+8	s	ꞩ
+4	_	 
+3	i	l
+2	v	V
+2	Є	C
+2	a	є
+2	-	_
+2	i	f
+2	Ꞩ	S
+1	tl__	1924
+0.022026431718061675
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-11-00010000.pyrnn.gz
+errors          66
+missing          0
+total         3405
+err          1.938 %
+errnomiss    1.938 %
+6	_	f
+3	V	v
+3	_	̦
+2	_	.
+2	e	є
+2	_	j
+2	_	 
+2	t	f
+1	.	_
+1	l___	1924
+0.019383259911894272
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-12-00010000.pyrnn.gz
+errors          59
+missing          0
+total         3405
+err          1.733 %
+errnomiss    1.733 %
+5	_	f
+4	t	f
+3	_	̦
+3	Є	C
+3	_	 
+2	_	)
+2	l	I
+2	_	D
+2	 	-
+1	_	.
+0.017327459618208516
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-13-00010000.pyrnn.gz
+errors          64
+missing          0
+total         3405
+err          1.880 %
+errnomiss    1.880 %
+5	z	ƶ
+3	 	-
+3	ţ	ŗ
+3	O	C
+3	_	 
+2	l	I
+2	l	_
+2	-	_
+2	t	f
+1	T___	1917
+0.018795888399412628
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-14-00010000.pyrnn.gz
+errors          52
+missing          0
+total         3405
+err          1.527 %
+errnomiss    1.527 %
+4	 	-
+4	_	 
+2	l	I
+2	z	ƶ
+2	i	f
+2	O	C
+2	t	f
+1	jļ__	1917
+1	c	є
+1	_	ŗ
+0.015271659324522761
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-15-00010000.pyrnn.gz
+errors          65
+missing          0
+total         3405
+err          1.909 %
+errnomiss    1.909 %
+4	_	f
+4	t	f
+3	r	_
+3	Є	C
+2	e	є
+2	_	-
+2	O	D
+2	ļ	j
+2	ļ	ţ
+2	_	 
+0.01908957415565345
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-16-00010000.pyrnn.gz
+errors          86
+missing          0
+total         3405
+err          2.526 %
+errnomiss    2.526 %
+8	_	ţ
+5	.	_
+3	_	̦
+3	 	-
+3	l	f
+3	_	 
+3	O	D
+3	t	f
+2	_	.
+2	_	f
+0.02525697503671072
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-17-00010000.pyrnn.gz
+errors          71
+missing          0
+total         3405
+err          2.085 %
+errnomiss    2.085 %
+11	_	 
+6	_	f
+3	O	C
+2	_	v
+2	L	D
+2	e	є
+2	_	-
+2	l	I
+2	i	f
+2	t	f
+0.020851688693098384
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-18-00010000.pyrnn.gz
+errors          73
+missing          0
+total         3405
+err          2.144 %
+errnomiss    2.144 %
+9	i	f
+6	z	ƶ
+3	_	̦
+3	_	-
+3	O	C
+2	P	D
+2	e	є
+2	ь	в
+1	.	_
+1	_	S
+0.021439060205580028
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-19-00010000.pyrnn.gz
+errors          74
+missing          0
+total         3405
+err          2.173 %
+errnomiss    2.173 %
+7	_	 
+5	l	f
+3	 	-
+2	_	̦
+2	_	-
+2	ꞩ	s
+2	l	I
+2	i	f
+2	_	f
+2	Ꞩ	S
+0.021732745961820853
+INFO:  
+INFO:  ########## /Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q 
+INFO:  
+# loading object ././models/incr/sjd-20-00010000.pyrnn.gz
+errors          56
+missing          0
+total         3405
+err          1.645 %
+errnomiss    1.645 %
+4	 	-
+3	_	f
+2	e	є
+2	ꞩ	s
+2	l	I
+2	Є	C
+2	.	,
+2	E	D
+1	.	_
+1	_	S
+0.01644640234948605
