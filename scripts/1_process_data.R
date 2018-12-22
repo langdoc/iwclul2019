@@ -368,6 +368,26 @@ gt_sjd_incr <- dir("train/sjd/", pattern = "png", full.names = TRUE) %>%
   mutate(page_group_padded = str_pad(page_group, pad = "0", width = 2)) %>%
   arrange(page_group)
 
+gt_sjd_incr_text <- gt_sjd_incr %>% mutate(filename_gt = str_replace(filename, "bin.png", "gt.txt")) %>% split(.$filename) %>% 
+  map_df(~ {tibble(line = read_file(.$filename_gt),
+                   page_group = .x$page_group)}) %>%
+  arrange(page_group)
+
+words <- gt_sjd_incr_text %>%
+  unnest_tokens(output = "token", input = line) %>%
+  group_by(page_group) %>%
+  count(page_group)
+
+chars <- gt_sjd_incr_text %>%
+  mutate(char = str_split(line, "")) %>%
+  select(-line) %>%
+  unnest(char) %>%
+  group_by(page_group) %>%
+  count(page_group)
+
+mean(words$n)
+mean(chars$n)
+
 slicing_window <- function(window){
   
   training_set <- gt_sjd_incr %>%

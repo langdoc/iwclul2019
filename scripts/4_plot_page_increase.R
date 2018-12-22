@@ -24,6 +24,6 @@ score_incr_plot <- ggplot(data = errors, aes(x = model, y = error_rate, group = 
 
 dir.create("plots")
 
-ggsave(filename = "plots/figure_5.png", plot = score_incr_plot)
+ggsave(filename = "plots/figure_4.png", plot = score_incr_plot)
 
-str_glue("Test scores for Kildin Saami OCR model. Best score with error rate of {best_score$error_rate}%  marked with red")
+str_glue("Test scores for Kildin Saami OCR model. Best score with error rate of {best_score$error_rate}\\%  marked with red")
