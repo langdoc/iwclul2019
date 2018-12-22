@@ -117,33 +117,6 @@ meta_part_8 <- tribble(~page, ~lang, ~orig_page,
                        4, "yrk", 60) %>%
   mutate(page = str_pad(page, width = "4", pad = "0"))
 
-# meta_part_7 <- tribble(~page, ~lang, ~orig_page,
-#                        1, "evn", 54,
-#                        2, "evn", 55,
-#                        3, "evn", 56,
-#                        4, "evn", 57,
-#                        5, "evn", 58,
-#                        6, "evn", 59,
-#                        7, "evn", 56,
-#                        8, "evn", 57,
-#                        9, "evn", 58,
-#                        10, "evn", 59,
-#                        11, "evn", 56,
-#                        12, "evn", 57,
-#                        13, "evn", 58,
-#                        14, "evn", 59,
-#                        15, "evn", 56,
-#                        16, "evn", 57,
-#                        17, "evn", 58,
-#                        18, "evn", 59,
-#                        19, "evn", 60,
-#                        20, "evn", 61,
-#                        21, "evn", 62,
-#                        22, "evn", 63,
-#                        23, "evn", 64) %>%
-#   mutate(page = str_pad(page, width = "4", pad = "0"))
-
-
 gt <- bind_rows(
   dir("./data/unified-northern-alphabet-ocr/train_part_1/", 
       pattern = "gt.txt", 
@@ -207,6 +180,32 @@ gt <- bind_rows(
   mutate(new_filename = str_extract(file, "train_part_.+")) %>%
   mutate(new_filename = str_replace_all(new_filename, "[/]+", "-")) %>%
   mutate(new_filename_png = str_replace_all(new_filename, ".gt.txt", ".bin.png"))
+
+
+print("Average number of characters per line.")
+gt %>% mutate(line = str_replace_all(line, " ", "")) %>%
+  mutate(character_numbers = nchar(line)) %>%
+  summarise(mean = mean(character_numbers))
+
+print("Average number of characters per page.")
+gt %>% group_by(lang, orig_page) %>%
+  summarise(page_text = glue::collapse(line, "")) %>%
+  ungroup() %>%
+  mutate(character_numbers = nchar(page_text)) %>%
+  summarise(mean = mean(character_numbers))
+
+print("Average number of characters per page by language.")
+gt %>% group_by(lang, orig_page) %>%
+  summarise(page_text = glue::collapse(line, "")) %>%
+  mutate(character_numbers = nchar(page_text)) %>%
+  summarise(mean = mean(character_numbers))
+
+print("Average number of word tokens per page.")
+gt %>% group_by(lang, orig_page) %>%
+  unnest_tokens(output = "token", input = line) %>%
+  count(lang, page) %>%
+  ungroup() %>%
+  summarise(mean = mean(n))
 
 # gt %>% mutate(file = str_remove(file, "./data/unified-northern-alphabet-ocr/")) %>%
 #   select(-line, -set, -id_global) %>%
