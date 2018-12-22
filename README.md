@@ -31,7 +31,7 @@ bash scripts/4_evaluate_page_increase.sh
 
 # SORRY! You need to copy manually the output of that 
 # script and save it to this file :( For example:
-pbpaste > evaluation/incr/incr_log
+pbpaste > evaluation/incr/incr_log.txt
 
 # This saves the figure about the increase
 # into file plots/figure_4.png

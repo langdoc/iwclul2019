@@ -1,7 +1,7 @@
 library(tidyverse)
 library(ggplot2)
 
-errors <- read_lines("evaluation/incr/incr_log") %>%
+errors <- read_lines("evaluation/incr/incr_log.txt") %>%
   .[str_detect(., "(loading object|err )")] %>%
   glue::glue_collapse() %>%
   str_split("# loading ") %>%
