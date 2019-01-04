@@ -2,15 +2,15 @@ library(tidyverse)
 library(ggplot2)
 library(tidytext)
 
-run_model <- function(model = "models/mixed/mixed-00020000.pyrnn.gz", folder = "test/*/*.bin.png"){
-  system(str_glue("/Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-rpred -q -Q 4 -m {model} '{folder}'"))
+run_model <- function(model, folder){
+  system(str_glue("ocropus-rpred -q -Q 4 -m {model} '{folder}'"))
 }
 
 evaluate_model <- function(model = "mixed", test_set = "test/*/*.bin.png"){
 
   test_gt <- str_replace(test_set, "bin.png", "gt.txt")
 
-  result <- system(str_glue("/Users/niko/anaconda3/envs/ocropus_env/bin/ocropus-econf -c 0 {test_gt}"), 
+  result <- system(str_glue("ocropus-econf -c 0 {test_gt}"), 
                    intern = TRUE) %>%
     str_replace_all(" +", " ") %>%
     glue::glue_collapse(sep = " ") %>%
