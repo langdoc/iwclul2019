@@ -11,6 +11,11 @@ The paper concludes that with very few resources it is possible to build state-o
 
 All materials used originate from the National Library of Finland's Fenno-Ugrica collection, except the Evenki data, which is available [in the University of Latvia's library](https://dspace.lu.lv/dspace/handle/7/28251). 
 
+## Changelog
+
+- v1.1 The scripts were harmonized to work in other environments
+- v1.0 The exact version used in paper
+
 ## Reproducibility
 
 The results in the study can be repeated by following commands. Ocropy has to be installed in the local environment. **In the current version there are hard-coded paths to Ocropy command line tools, and those have to be changed to run the tests locally.** This will be fixed in final release.
